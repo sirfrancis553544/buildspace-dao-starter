@@ -1,8 +1,9 @@
+import { UnsupportedChainIdError } from "@web3-react/core";
 import { useEffect, useMemo, useState } from "react";
 import { ethers } from "ethers";
 import { useWeb3 } from "@3rdweb/hooks";
 import { ThirdwebSDK } from "@3rdweb/sdk";
-import { UnsupportedChainIdError } from "@web3-react/core";
+
 
 //! check if they have the NFT
 // We instantiate the sdk on Rinkeby.
@@ -85,8 +86,9 @@ const App = () => {
         console.error("failed to check if wallet has voted", err);
       });
   }, [hasClaimedNFT, proposals, address]);
+  
   //!end of voting logic
-
+  
   //! Retrieve token holders on web app
   // Holds the amount of token each member has in state.
   const [memberTokenAmounts, setMemberTokenAmounts] = useState({});
@@ -163,6 +165,7 @@ const App = () => {
     if (!address) {
       return;
     }
+   
 
     // Check if the user has the NFT by using bundleDropModule.balanceOf
     return bundleDropModule
@@ -183,6 +186,20 @@ const App = () => {
       });
   }, [address]);
 
+
+
+  if (error instanceof UnsupportedChainIdError ) {
+    return (
+      <div className="unsupported-network">
+        <h2>Please connect to Rinkeby</h2>
+        <p>
+          This dapp only works on the Rinkeby network, please switch networks
+          in your connected wallet.
+        </p>
+      </div>
+    );
+  }
+
   //! end
   // This is the case where the user hasn't connected their wallet
   // to your web app. Let them call connectWallet.
@@ -197,17 +214,7 @@ const App = () => {
     );
   }
 
-  if (error instanceof UnsupportedChainIdError ) {
-    return (
-      <div className="unsupported-network">
-        <h2>Please connect to Rinkeby</h2>
-        <p>
-          This dapp only works on the Rinkeby network, please switch networks
-          in your connected wallet.
-        </p>
-      </div>
-    );
-  }
+ 
 
 
   //! render member data on dashboard
