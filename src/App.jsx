@@ -194,7 +194,7 @@ const App = () => {
         <h2>Please connect to Rinkeby</h2>
         <p>
           This dapp only works on the Rinkeby network, please switch networks
-          in your connected wallet.
+          in your connected wallet. If you need ETh here is a <a href="https://faucets.chain.link/rinkeby" target="_blank" rel="noopener noreferrer">Faucet</a>
         </p>
       </div>
     );
